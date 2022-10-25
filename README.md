@@ -1,2 +1,2 @@
-# valTrack
-SimpleValTracker
+# VxlTrxck
+Valorant stats tracker, but better
