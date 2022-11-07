@@ -1,15 +1,3 @@
-const axios = require('axios');
-
-function requestAccount(user, tag){
-    axios.get(`https://api.henrikdev.xyz/valorant/v1/account/${user}/${tag}`)
-    .then(result => {
-        console.log(result.data); //Or just result for all data
-        player = data;
-    })
-    .catch(error => {
-        console.log(error);
-    });
-}
 
 
 
