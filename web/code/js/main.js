@@ -16,16 +16,18 @@ btn.addEventListener('click', (event) => {
     tag = document.getElementById('tag').value;
     console.log('user: ' + user + ' - tag: ' + tag);
      
-    requestAccount();
+    requestAccount(user, tag);
+    console.log(player);
     
+    /*
     setTimeout(function() {
         console.log(player.data.puuid);
         requestMatches(player.data.puuid);
-    }, 2000);
+    }, 2000);*/
     
 
 });
-
+/*
 function requestAccount(){
     ajxReq = $.ajax(`https://api.henrikdev.xyz/valorant/v1/account/${user}/${tag}`, {
         contentType : 'application/json',
