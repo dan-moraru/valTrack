@@ -1,19 +1,53 @@
-const axios = require('axios');
+//const axios = require('axios');
+const BrowserWindow = require('electron');
+const express = require('express');
+const app = express();
+const path = require('path');
+//const methodOverride = require('method-override');
 
-//let btn = document.querySelector('button');
-let user = "radish";
-let tag = "NA11";
+module.exports = function (n) {return n * 111 }
+
+app.use(express.urlencoded({extended : true}));
+app.use(express.json());
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+//app.use(methodOverride("_method"));
+
+app.use(express.static('js'));
+
+let mainWindow;
+app.on('ready', () => {
+    mainWindow = new BrowserWindow({
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false
+        }
+    });
+});
+
+app.listen(3000, () => {
+    console.log("LISTENING ON PORT 3000");
+})
+
+app.get('/', (request, response) => {
+    response.render('index');
+});
+
+//let btn; //= document.querySelector('button');
+//let user; //= 'radish';
+//let tag; //= 'NA11';
 let ajxReq;
-let player;
+//let player;
 
 let version = 'v3';
 let mode = 'matches';
 let region = 'na';
 let size = 2;
 let puuid;
-requestAccount(user, tag);
 
-/*btn.addEventListener('click', (event) => {
+//requestAccount(user, tag);
+/*
+btn.addEventListener('click', (event) => {
     event.preventDefault();
     //user = document.getElementById('user').value;
     //tag = document.getElementById('tag').value;
@@ -31,6 +65,7 @@ requestAccount(user, tag);
 
 });*/
 
+/*
 function requestAccount(user, tag){
     //console.log(user, tag);
     axios.get(`https://api.henrikdev.xyz/valorant/v1/account/${user}/${tag}`)
