@@ -1,20 +1,21 @@
-const axios = require('axios');
-
 let btn = document.querySelector('button');
 console.log(btn);
 
 let user; //= 'radish';
 let tag; //= 'NA11';
-let player;
+//let player;
 
 btn.addEventListener('click', (event) => {
     event.preventDefault();
     user = document.getElementById('user').value;
     tag = document.getElementById('tag').value;
     console.log('user: ' + user + ' - tag: ' + tag);
-     
-    requestAccount(user, tag);
-    console.log(player);
+    let body = {
+        user: `${user}`,
+        tag: `${tag}`
+    }
+    sendData("/", body);
+    //console.log(player);
     
     /*
     setTimeout(function() {
@@ -24,14 +25,22 @@ btn.addEventListener('click', (event) => {
     
 });
 
-function requestAccount(user, tag){
-    //console.log(user, tag);
-    axios.get(`https://api.henrikdev.xyz/valorant/v1/account/${user}/${tag}`)
-    .then(result => {
-        console.log(result.data); //Or just result for all data
-        //player = data;
+
+function sendData(url, body){
+    fetch(url, {
+        method : 'POST',
+        headers: {"Content-type": "application/json; charset=UTF-8"},
+        body : JSON.stringify(body)
     })
-    .catch(error => {
-        console.log(error);
-    });
+        .then((res) => {
+            console.log(res);
+            return res;
+        })
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 }
+
