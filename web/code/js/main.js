@@ -6,8 +6,6 @@ const path = require('path');
 const axios = require('axios');
 //const methodOverride = require('method-override');
 
-module.exports = function (n) {return n * 111 }
-
 app.use(express.urlencoded({extended : true}));
 app.use(express.json());
 app.set("view engine", "ejs");
@@ -31,15 +29,16 @@ app.listen(3000, () => {
 })
 
 app.get('/', (request, response) => {
-    response.render('index', {player});
+    response.render('index');
 });
 
 app.post('/', (request, response) => {
     console.log(request.body);
     let obj = request.body;
     requestAccount(obj.user, obj.tag);
+    console.log("player: ", player);
     response.redirect("/");
-    //console.log(obj.user, obj.tag);
+
 });
 
 
@@ -48,7 +47,6 @@ function requestAccount(user, tag){
     axios.get(`https://api.henrikdev.xyz/valorant/v1/account/${user}/${tag}`)
     .then(result => {
         console.log(result.data); //Or just result for all data
-        //player = data;
     })
     .catch(error => {
         console.log(error);

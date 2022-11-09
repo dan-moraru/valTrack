@@ -15,7 +15,7 @@ btn.addEventListener('click', (event) => {
         tag: `${tag}`
     }
     sendData("/", body);
-    //console.log(player);
+    
     
     /*
     setTimeout(function() {
