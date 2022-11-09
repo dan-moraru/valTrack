@@ -32,10 +32,10 @@ app.get('/', (request, response) => {
     response.render('index');
 });
 
-app.post('/', (request, response) => {
+app.post('/', async(request, response) => {
     //console.log(request.body);
     let obj = request.body;
-    let data = requestAccount(obj.user, obj.tag);
+    let data = await requestAccount(obj.user, obj.tag);
     console.log("did it work", data);
     response.send(JSON.stringify({"player" : data}));
     
@@ -46,28 +46,19 @@ app.post('/', (request, response) => {
 });
 
 
-function requestAccount(user, tag){
+async function requestAccount(user, tag){
     //console.log(user, tag);
-    let data =
-    axios.get(`https://api.henrikdev.xyz/valorant/v1/account/${user}/${tag}`)
-    .then(res => {
-        //console.log(res.data); //Or just result for all data
-        //console.log(res.data.data.puuid);
-
-        data.then(res => {
-            console.log("promise", res);
-            return res;
-        });
-
-        return res.data.data;
-        //return res.json();
-        //response.send(result.data);
+    let res = await axios({
+        url: `https://api.henrikdev.xyz/valorant/v1/account/${user}/${tag}`,
+        method: 'get',
+        timeout: 8000,
+        headers: {
+            'Content-Type': 'application/json',
+        }
     })
-    .catch(error => {
-        console.log("error");
-
-    });
-    return data;
+    if (res.status === 200){
+        return res.data;
+    }
 }
 
 //let btn; //= document.querySelector('button');
