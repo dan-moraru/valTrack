@@ -33,24 +33,41 @@ app.get('/', (request, response) => {
 });
 
 app.post('/', (request, response) => {
-    console.log(request.body);
+    //console.log(request.body);
     let obj = request.body;
-    requestAccount(obj.user, obj.tag);
-    console.log("player: ", player);
-    response.redirect("/");
+    let data = requestAccount(obj.user, obj.tag);
+    console.log("did it work", data);
+    response.send(JSON.stringify({"player" : data}));
+    
+    
+    //console.log("player: ", player);
+    //response.render('index', {});
 
 });
 
 
 function requestAccount(user, tag){
     //console.log(user, tag);
+    let data =
     axios.get(`https://api.henrikdev.xyz/valorant/v1/account/${user}/${tag}`)
-    .then(result => {
-        console.log(result.data); //Or just result for all data
+    .then(res => {
+        //console.log(res.data); //Or just result for all data
+        //console.log(res.data.data.puuid);
+
+        data.then(res => {
+            console.log("promise", res);
+            return res;
+        });
+
+        return res.data.data;
+        //return res.json();
+        //response.send(result.data);
     })
     .catch(error => {
-        console.log(error);
+        console.log("error");
+
     });
+    return data;
 }
 
 //let btn; //= document.querySelector('button');

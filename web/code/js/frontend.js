@@ -34,10 +34,11 @@ function sendData(url, body){
     })
         .then((res) => {
             console.log(res);
-            return res;
+            return res.json();
         })
         .then((data) => {
-            console.log(data);
+            //player object response
+            console.log("lmao", data);
         })
         .catch((err) => {
             console.log(err);
