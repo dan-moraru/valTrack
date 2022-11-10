@@ -1,31 +1,30 @@
 let btn = document.querySelector('button');
 console.log(btn);
 
-let user; //= 'radish';
-let tag; //= 'NA11';
-//let player;
+let user;
+let tag;
+let players = [];
 
 btn.addEventListener('click', (event) => {
     event.preventDefault();
     user = document.getElementById('user').value;
     tag = document.getElementById('tag').value;
+
     console.log('user: ' + user + ' - tag: ' + tag);
+
     let body = {
         user: `${user}`,
         tag: `${tag}`
     }
     sendData("/", body);
-    
-    
-    /*
-    setTimeout(function() {
-        console.log(player.data.puuid);
-        requestMatches(player.data.puuid);
-    }, 2000);*/
-    
+
 });
 
-
+/**
+ * Requests data
+ * @param {String} url 
+ * @param {Object} body 
+ */
 function sendData(url, body){
     fetch(url, {
         method : 'POST',
@@ -37,11 +36,11 @@ function sendData(url, body){
             return res.json();
         })
         .then((data) => {
-            //player object response
-            console.log("lmao", data);
+            console.log(data);
+            players.push(data);
+            console.log(players);
         })
         .catch((err) => {
             console.log(err);
         })
 }
-

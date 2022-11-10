@@ -1,28 +1,18 @@
-//const axios = require('axios');
-//const BrowserWindow = require('electron');
+//Packages required
 const express = require('express');
-const app = express();
 const path = require('path');
 const axios = require('axios');
-//const methodOverride = require('method-override');
 
+//URL of api
+let url = `https://api.henrikdev.xyz/valorant/`;
+
+//Setting up the application
+const app = express();
 app.use(express.urlencoded({extended : true}));
 app.use(express.json());
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-//app.use(methodOverride("_method"));
-
 app.use(express.static('js'));
-
-/*let mainWindow;
-app.on('ready', () => {
-    mainWindow = new BrowserWindow({
-        webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false
-        }
-    });
-});*/
 
 app.listen(3000, () => {
     console.log("LISTENING ON PORT 3000");
@@ -33,23 +23,28 @@ app.get('/', (request, response) => {
 });
 
 app.post('/', async(request, response) => {
-    //console.log(request.body);
     let obj = request.body;
-    let data = await requestAccount(obj.user, obj.tag);
-    console.log("did it work", data);
-    response.send(JSON.stringify({"player" : data}));
-    
-    
-    //console.log("player: ", player);
-    //response.render('index', {});
-
+    let player = await requestAccount(url, obj.user, obj.tag);
+    let data = await getAllData(url, obj.user, obj.tag);
+    let allData = [player, data];
+    response.send(JSON.stringify({"player" : allData}));
 });
 
+//Extra variables needed for more precise data
+let version = 'v3';
+let mode = 'matches';
+let region = 'na';
+let size = 2;
 
-async function requestAccount(user, tag){
-    //console.log(user, tag);
+async function getAllData(url, user, tag){
+    let data = await requestAccount(url, user, tag);
+    let moreData = await requestMatches(url, version, mode, region, data.data.puuid, size);
+    return moreData;
+}
+
+async function requestAccount(url, user, tag){
     let res = await axios({
-        url: `https://api.henrikdev.xyz/valorant/v1/account/${user}/${tag}`,
+        url: url+`v1/account/${user}/${tag}`,
         method: 'get',
         timeout: 8000,
         headers: {
@@ -59,112 +54,24 @@ async function requestAccount(user, tag){
     if (res.status === 200){
         return res.data;
     }
+    else{
+        return res.status;
+    }
 }
 
-//let btn; //= document.querySelector('button');
-//let user; //= 'radish';
-//let tag; //= 'NA11';
-let ajxReq;
-//let player;
-
-let version = 'v3';
-let mode = 'matches';
-let region = 'na';
-let size = 2;
-let puuid;
-
-//requestAccount(user, tag);
-/*
-btn.addEventListener('click', (event) => {
-    event.preventDefault();
-    //user = document.getElementById('user').value;
-    //tag = document.getElementById('tag').value;
-    console.log('user: ' + user + ' - tag: ' + tag);
-     
-    requestAccount(user, tag);
-    console.log(player);
-    
-    
-    setTimeout(function() {
-        console.log(player.data.puuid);
-        requestMatches(player.data.puuid);
-    }, 2000);
-    
-
-});*/
-
-/*
-function requestAccount(user, tag){
-    //console.log(user, tag);
-    axios.get(`https://api.henrikdev.xyz/valorant/v1/account/${user}/${tag}`)
-    .then(result => {
-        console.log(result.data); //Or just result for all data
-        //player = data;
+async function requestMatches(url, version, mode, region, puuid, size){
+    let res = await axios({
+        url: url+`${version}/by-puuid/${mode}/${region}/${puuid}?size=${size}`,
+        method: 'get',
+        timeout: 8000,
+        headers: {
+            'Content-Type': 'application/json',
+        }
     })
-    .catch(error => {
-        console.log(error);
-    });
+    if (res.status === 200){
+        return res.data;
+    }
+    else{
+        return res.status;
+    }
 }
-/*
-function requestAccount(){
-    ajxReq = $.ajax(`https://api.henrikdev.xyz/valorant/v1/account/${user}/${tag}`, {
-        contentType : 'application/json',
-        dataType : 'json',
-        timeout : 5000,
-        
-        success: function (data, status){
-            console.log('worked');
-            console.log(data);
-            console.log(status);
-            player = data;
-        },
-
-        error: function (textStatus, errorMessage){
-            console.log('error');
-            console.log(textStatus);
-            console.log(errorMessage);
-        }
-    });
-}
-
-function requestMatches(puuid){
-    ajxReq = $.ajax(`https://api.henrikdev.xyz/valorant/${version}/by-puuid/${mode}/${region}/${puuid}?size=${size}`, {
-        contentType : 'application/json',
-        dataType : 'json',
-        timeout : 5000,
-        
-        success: function (data, status){
-            console.log('worked');
-            console.log(data);
-            console.log(status);
-        },
-
-        error: function (textStatus, errorMessage){
-            console.log('error');
-            console.log(textStatus);
-            console.log(errorMessage);
-        }
-    });
-}
-
-/*
-function getCrosshair(id){
-    ajxReq = $.ajax(`https://api.henrikdev.xyz/valorant/v1/crosshair/generate?id=${id}`, {
-        contentType : 'application/json',
-        dataType : 'json',
-        timeout : 5000,
-        
-        success: function (data, status){
-            console.log('worked');
-            console.log(data);
-            console.log(status);
-        },
-
-        error: function (textStatus, errorMessage){
-            console.log('error');
-            console.log(textStatus);
-            console.log(errorMessage);
-        }
-    });
-}
-*/
