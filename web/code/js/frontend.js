@@ -17,7 +17,6 @@ btn.addEventListener('click', (event) => {
         tag: `${tag}`
     }
     sendData("/", body);
-
 });
 
 /**
@@ -37,10 +36,17 @@ function sendData(url, body){
         })
         .then((data) => {
             console.log(data);
+            //console.log(data[0].data.card.large);
+            //generateBanner(data);
             players.push(data);
             console.log(players);
         })
         .catch((err) => {
             console.log(err);
         })
+}
+
+function generateBanner(data){
+    let banner = data[0].data.card.large;
+    console.log(banner);
 }
