@@ -35,9 +35,9 @@ function sendData(url, body){
             return res.json();
         })
         .then((data) => {
-            console.log(data);
-            //console.log(data[0].data.card.large);
-            //generateBanner(data);
+            console.log("dataaaa", data);
+            let bannerSrc = data.player[0].data.card.large;
+            generateBanner(bannerSrc);
             players.push(data);
             console.log(players);
         })
@@ -46,7 +46,9 @@ function sendData(url, body){
         })
 }
 
-function generateBanner(data){
-    let banner = data[0].data.card.large;
-    console.log(banner);
+function generateBanner(src){
+    let body = document.querySelector('body');
+    let banner = document.createElement('img');
+    banner.src = src;
+    body.appendChild(banner);
 }
