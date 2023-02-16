@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Home Page</title>
+        <link rel="stylesheet" href="/css/main.css">
+        <script defer type="text/javascript" src="http://localhost:3000/frontend.js"></script>
+        <script defer type="text/javascript" src="http://localhost:3000/main.js"></script>
+    </head>
+    <body>
+        <section id="top_section">
+            <form>
+                <fieldset>
+                    <section id="user_section">
+                        <label>Username:</label>
+                        <input type="text" id="user" name="user">
+                    </section>
+                    <section id="tag_section">
+                        <label>Tag:</label>
+                        <input type="text" id="tag" name="tag">
+                    </section>
+                    <button type="submit" id="login_button">LOGIN</button> 
+                </fieldset>
+            </form>
+        </section>
+        <section id="main_section">
+            <section id="stats_section">
+                <ul id="stats_list">
+                    
+                </ul>
+            </section>
+            <section id="player_section">
+                <p>need to filter deatmatch out, etc</p>
+                <p>loading animation would be cool</p>
+                <p>error handling -> status code</p>
+                <p>database -> mongodb</p>
+                <p>versus mode</p>
+                <p>graphs?</p>
+                <section id="rank_section"></section>
+            </section>
+            <!--Dynamically created player card and recent agent images. Do not put comments in section-->
+            <section id="card_section"></section>
+        </section>
+    </body>
+</html>

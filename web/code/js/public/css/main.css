@@ -1,0 +1,100 @@
+/*@font-face {
+    font-family: 'valorant';
+    src: url('https://www.dafont.com/valorant.font');
+}*/
+
+fieldset{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 0;
+}
+
+label{
+    margin: 5px;
+}
+
+button{
+    margin: 10px;
+}
+
+#top_section{
+    height: 5%;
+    box-sizing: border-box;
+}
+
+html{
+    height: 100%;
+    box-sizing: border-box;
+}
+
+body{
+    box-sizing: border-box;
+    background-image: url("http://localhost:3000//images/valBackground.png");
+}
+
+#main_section{
+    height: 90%;
+    box-sizing: border-box;
+    display: flex;
+}
+
+#stats_section{
+    width: 40%;
+    height: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    vertical-align: middle;
+    font-family: 'valorant';
+}
+
+ul{
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+    list-style-type: none;
+}
+
+#player_section{
+    width: 20%;
+    height: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#card_section{
+    width: 40%;
+    box-sizing: border-box;
+    height: 100%;
+    text-align: center;
+}
+
+#card_img{
+    vertical-align: middle;
+    margin: auto;
+    margin-left: -11%;
+    margin-top: 10.3%;
+    box-shadow: 0 0 50px 30px rgb(255, 255, 255);
+}
+
+#agent_img{
+    position: absolute;
+    left: 55%;
+    top: 4.3%;
+    z-index: 1;
+    height: auto; 
+    width: auto; 
+    max-width: 82%;
+    max-height: 82%;
+}
+
+#agent_img:hover{
+    opacity: 0;
+}
+
+#rank_img{
+    /*list-style-image: url('check.png');
+    list-style-type: none;*/
+}
