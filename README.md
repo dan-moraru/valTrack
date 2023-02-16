@@ -1,2 +1,1 @@
-# VxlTrxck
-Valorant stats tracker, but better
+# Simple Valorant Tracker - Minimal Frontend
